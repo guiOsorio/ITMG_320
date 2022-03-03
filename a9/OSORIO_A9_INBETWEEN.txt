@@ -1,0 +1,26 @@
+/* Done by Guilherme Osorio */
+
+/* In & Between Query 1 - job title starts with 'Production' */
+
+SELECT BusinessEntityID, JobTitle FROM AdventureWorks2008.HumanResources.Employee
+WHERE JobTitle LIKE 'Production%';
+
+/* In & Between Query 2 - job title ends with 'Specialist' */
+
+SELECT BusinessEntityID, JobTitle FROM AdventureWorks2008.HumanResources.Employee
+WHERE JobTitle LIKE '%Specialist';
+
+/* In & Between Query 3 - hired in 1999 (no results found for this query) */
+
+SELECT BusinessEntityID, JobTitle, HireDate, SalariedFlag FROM AdventureWorks2008.HumanResources.Employee
+WHERE HireDate LIKE '1999%';
+
+/* In & Between Query 4 - hired in 1999 AND salaried (no results found for this query) */
+
+SELECT BusinessEntityID, JobTitle, HireDate, SalariedFlag FROM AdventureWorks2008.HumanResources.Employee
+WHERE HireDate LIKE '1999%' AND SalariedFlag = 1;
+
+/* In & Between Query 5 - count hired between 1998 and 1999 (no results found for this query) */
+
+SELECT COUNT(*) FROM AdventureWorks2008.HumanResources.Employee
+WHERE HireDate BETWEEN '1998-01-01' AND '1999-12-31';

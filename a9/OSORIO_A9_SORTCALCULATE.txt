@@ -1,0 +1,37 @@
+/* Done by Guilherme Osorio */
+
+/* Sort Calculate Query 1 - list people with last name starting with Z, order by last name */
+
+SELECT BusinessEntityID, Title, CONCAT(FirstName, ' ', LastName) AS 'FullName', PersonType 
+FROM AdventureWorks2008.Person.Person
+WHERE LastName LIKE 'Z%'
+ORDER BY LastName;
+
+/* Sort Calculate Query 2 - list people with last name starting with Z, order by last name */
+
+SELECT BusinessEntityID, Title, CONCAT(FirstName, ' ', LastName) AS 'FullName', PersonType 
+FROM AdventureWorks2008.Person.Person
+WHERE LastName LIKE 'Z%'
+ORDER BY LastName;
+
+/* Sort Calculate Query 3 - list employees with name starting with Z, show full name in a single column order by person type */
+
+SELECT CONCAT(FirstName, ' ', LastName) AS 'Person' 
+FROM AdventureWorks2008.Person.Person
+WHERE FirstName LIKE 'Z%'
+ORDER BY PersonType;
+
+/* Sort Calculate Query 4 - use column aliases in employees table, sort by job title */
+
+SELECT JobTitle AS 'Title', BusinessEntityID AS 'ID', VacationHours AS 'Vacation Hrs', SickLeaveHours AS 'Sick Leave Hrs', 
+(VacationHours + SickLeaveHours) AS 'Total Hrs'
+FROM AdventureWorks2008.HumanResources.Employee
+ORDER BY JobTitle;
+
+/* Sort Calculate Query 5 - use column aliases in employees table, sort by total hours desc, then by job title */
+
+SELECT JobTitle AS 'Title', BusinessEntityID AS 'ID', VacationHours AS 'Vacation Hrs', SickLeaveHours AS 'Sick Leave Hrs', 
+(VacationHours + SickLeaveHours) AS 'Total Hrs'
+FROM AdventureWorks2008.HumanResources.Employee
+ORDER BY (VacationHours + SickLeaveHours) DESC, JobTitle;
+

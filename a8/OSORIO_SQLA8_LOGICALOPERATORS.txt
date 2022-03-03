@@ -1,0 +1,23 @@
+/* Done by Guilherme Osorio */
+
+/* Logical Operators Query 1 - female marketing specialists */
+
+SELECT BusinessEntityID, OrganizationLevel, JobTitle, Gender FROM AdventureWorks2008.HumanResources.Employee
+WHERE JobTitle = 'Marketing Specialist' AND Gender = 'F';
+
+/* Logical Operators Query 2 - all marketing specialists */
+
+SELECT BusinessEntityID, OrganizationLevel, JobTitle, Gender FROM AdventureWorks2008.HumanResources.Employee
+WHERE JobTitle = 'Marketing Specialist';
+
+/* Logical Operators Query 3 - marketing specialist or marketing assistant */
+
+SELECT BusinessEntityID, OrganizationLevel, JobTitle FROM AdventureWorks2008.HumanResources.Employee
+WHERE JobTitle = 'Marketing Specialist' OR JobTitle = 'Marketing Assistant';
+
+/* Logical Operators Query 4 - marketing specialist or marketing assistant */
+
+SELECT BusinessEntityID, JobTitle, VacationHours, MaritalStatus FROM AdventureWorks2008.HumanResources.Employee
+WHERE 
+	(JobTitle = 'Application Specialist' OR JobTitle = 'Marketing Specialist') AND 
+	(VacationHours > 73 OR MaritalStatus = 'M');

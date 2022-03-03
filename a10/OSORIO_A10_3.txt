@@ -1,0 +1,49 @@
+/* AGGREGATES PART TWO */
+
+/* Query 1 - Show the average evaluation scores each student has given for their teammates as an evaluator*/
+SELECT teamid AS 'Team', evaluatorID AS 'Student', eval_item_ID AS 'Eval Item', AVG(score) AS 'Avg Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY evaluatorID, teamid, eval_item_ID
+	ORDER BY teamid, evaluatorID, eval_item_ID;
+	
+/* Query 2 - Show the average evaluation scores each student has given for their teammates as an evaluator if the score is above 95 */
+SELECT teamid AS 'Team', evaluatorID AS 'Student', eval_item_ID AS 'Eval Item', AVG(score) AS 'Avg Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY evaluatorID, teamid, eval_item_ID
+	HAVING AVG(score) > 95
+	ORDER BY teamid, evaluatorID, eval_item_ID;
+	
+/* Query 3 - Show the average evaluation scores for each team for the three evaluation items. */
+SELECT teamid, eval_item_ID, AVG(score) AS 'Avg Team Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY teamid, eval_item_ID
+	ORDER BY teamid, eval_item_ID;
+	
+/* Query 4 - Show the average evaluation scores for each team for the three evaluation items if the average score is below 85. */
+SELECT teamid, eval_item_ID, AVG(score) AS 'Avg Team Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY teamid, eval_item_ID
+	HAVING AVG(score) < 85
+	ORDER BY teamid, eval_item_ID;
+	
+/* Query 5 - Show the average evaluation scores for ITPROS for the three evaluation items if the average score is below 85. */
+SELECT teamid, eval_item_ID, AVG(score) AS 'Avg Team Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY teamid, eval_item_ID
+	HAVING AVG(score) < 85 AND teamid = 'ITPROS'
+	ORDER BY teamid, eval_item_ID;

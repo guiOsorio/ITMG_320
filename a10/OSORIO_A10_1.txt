@@ -1,0 +1,45 @@
+/* TWO TABLES OR MORE */
+
+/* Query 1 - List students and their evaluations when they were the evaluator */
+SELECT stdid AS 'ID', CONCAT(stdfname, ' ', stdlname) AS 'Evaluator', team_name AS 'Team',
+eval_ID AS 'Eval ID', evalsemester AS 'Semester', evalyear AS 'Year'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+	ORDER BY stdid, eval_ID;
+	
+/* Query 2 - Join tables in the FROM clause with the JOIN operator. List female marketing specialists */
+SELECT Employee.BusinessEntityID, FirstName, LastName, JobTitle, Gender
+FROM AdventureWorks2008.HumanResources.Employee
+	JOIN AdventureWorks2008.Person.Person ON 
+		Employee.BusinessEntityID = Person.BusinessEntityID
+	WHERE JobTitle = 'Marketing Specialist' AND Gender = 'F'
+	ORDER BY Employee.BusinessEntityID;
+
+/* Query 3 - Join tables in the WHERE clause. List female marketing specialists */
+SELECT Employee.BusinessEntityID, FirstName, LastName, JobTitle
+FROM AdventureWorks2008.HumanResources.Employee, AdventureWorks2008.Person.Person
+	WHERE Employee.BusinessEntityID = Person.BusinessEntityID AND JobTitle = 'Marketing Specialist' AND Gender = 'F';
+
+/* Query 4 - Join tables in the FROM clause with the JOIN operator. List employees who work in the night
+shift. */
+SELECT Name, LastName, FirstName, JobTitle
+FROM AdventureWorks2008.Person.Person
+	JOIN AdventureWorks2008.HumanResources.Employee
+		ON Person.BusinessEntityID = Employee.BusinessEntityID
+		JOIN AdventureWorks2008.HumanResources.EmployeeDepartmentHistory
+			ON Person.BusinessEntityID = EmployeeDepartmentHistory.BusinessEntityID
+			JOIN AdventureWorks2008.HumanResources.Shift
+				ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+	WHERE Name = 'Night'
+	ORDER BY LastName, FirstName;
+
+/* Query 5 -  Join tables in the WHERE clause. List employees who work in the night shift. */
+SELECT Name, LastName, FirstName, JobTitle
+FROM AdventureWorks2008.Person.Person, AdventureWorks2008.HumanResources.Employee,
+AdventureWorks2008.HumanResources.EmployeeDepartmentHistory, AdventureWorks2008.HumanResources.Shift
+	WHERE Person.BusinessEntityID = Employee.BusinessEntityID 
+		AND Person.BusinessEntityID = EmployeeDepartmentHistory.BusinessEntityID
+		AND EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+		AND Name = 'Night'
+	ORDER BY LastName, FirstName;

@@ -1,0 +1,21 @@
+/* Done by Guilherme Osorio */
+
+/* Select Query 1 - full name, major and teamID for each student */
+
+SELECT CONCAT(stdfname, ' ', stdlname) AS 'FullName', stdmajor, std_teamID FROM AdventureWorks2008.dbo.students;
+
+/* Select Query 2 - all info from eval_items */
+
+SELECT * FROM AdventureWorks2008.dbo.eval_items;
+
+/* Select Query 3 - count # of departments */
+
+SELECT COUNT(*) FROM AdventureWorks2008.HumanResources.Department;
+
+/* Select Query 4 - count # of persons */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person;
+
+/* Select Query 5 - list the business entity ID and resume of job candidates */
+
+SELECT BusinessEntityID, Resume FROM AdventureWorks2008.HumanResources.JobCandidate;

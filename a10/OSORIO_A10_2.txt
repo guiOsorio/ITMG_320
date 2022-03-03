@@ -1,0 +1,27 @@
+/* SQL FUNDAMENTALS AGGREGATES */
+
+/* Query 1 - Show how many evaluations were done for each team. */
+SELECT teamid, team_name, COUNT(eval_ID) AS 'Number of Evaluations'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+	GROUP BY teamid, team_name;
+	
+/* Query 2 - Show how many evaluations each student in the ITPROS teams has done as the evaluator. */
+SELECT stdid, stdlname, teamid, COUNT(eval_ID) AS 'Number of Evaluations'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+	GROUP BY stdid, teamid, stdlname
+	HAVING teamid = 'ITPROS';
+	
+/* Query 3 - For the ITPROS teams, get the average, minimum, and maximum for evaluation items
+scores */
+SELECT teamid, eval_items_scores.eval_item_ID, AVG(score) AS 'Avg Score', MIN(score) AS 'Min Score', MAX(score) AS 'Max Score'
+FROM students
+	JOIN teams ON students.std_teamID = teams.teamid
+		JOIN evaluations ON students.stdid = evaluations.evaluateeID
+			JOIN eval_items_scores ON evaluations.eval_ID = eval_items_scores.eval_ID
+	GROUP BY eval_items_scores.eval_item_ID, teamid
+	HAVING teamid = 'ITPROS'
+	ORDER BY eval_items_scores.eval_item_ID;

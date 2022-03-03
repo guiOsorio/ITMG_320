@@ -1,0 +1,155 @@
+/* 
+	Question 1
+	Write a query to display the eight departments in the LGDEPARTMENT table sorted by department name. 
+*/
+
+SELECT DISTINCT dept_name FROM lgdepartment;
+
+/* 
+	Question 2
+	Write a query to display the first name, last name, phone number, title, and department number of employees who work in department 300 or have the title "CLERK I". Sort the output by last name and then by first name. 
+*/
+
+SELECT emp_fname, emp_lname, emp_phone, emp_title, dept_num FROM lgemployee
+WHERE dept_num = 300 OR emp_title = 'Clerk I'
+ORDER BY emp_lname, emp_fname;
+
+/* 
+	Question 3
+	Write a query to display the SKU (stock keeping unit), description, type, base, category, and price for 
+	all products that have a PROD_BASE of Water and a PROD_CATEGORY of Sealer.
+*/
+
+SELECT prod_sku, prod_descript, prod_type, prod_base, prod_category, prod_price FROM lgproduct
+WHERE prod_base = 'Water' AND prod_category = 'Sealer';
+
+/*
+	Question 4
+	Write a query to display the first name, last name, and email address of employees hired from 
+	January 1, 2005 to December 31, 2014. Sort the output by last name and then by first name.
+*/
+
+SELECT emp_fname, emp_lname, emp_email FROM lgemployee
+WHERE emp_hiredate BETWEEN '2005-01-01' AND '2014-12-31'
+ORDER BY emp_lname, emp_fname;
+
+/*
+	Question 5
+	Write a query to display all the Associates in the Employee table, sort by department name.
+*/
+
+SELECT emp_fname, emp_lname, emp_title, dept_name FROM lgemployee
+	JOIN lgdepartment ON lgemployee.dept_num = lgdepartment.dept_num
+WHERE emp_title = 'Associate'
+ORDER BY dept_name;
+
+/*
+	Question 6
+	Write a query to display the number of products in each category that have a water base, sorted by category.
+*/
+
+SELECT prod_category, COUNT(*) AS 'Number of Products' FROM lgproduct
+WHERE prod_base = 'Water'
+GROUP BY prod_category
+ORDER BY prod_category;
+
+/*
+	Question 7
+	Write a query to display the number of products within each base and type combinations sorted by base and then by type. 
+*/
+
+SELECT prod_base, prod_type, COUNT(*) AS 'Number of Products' FROM lgproduct
+GROUP BY prod_base, prod_type
+ORDER BY prod_base, prod_type;
+
+/*
+	Question 8
+	Write a query to display the total inventory-that is the sum f all products on hand for each brand ID. 
+	Sort the output by brand ID in descending order.
+*/
+
+SELECT lgbrand.brand_id, SUM(prod_qoh) AS 'TOTALINVENTORY' FROM lgbrand
+	JOIN lgproduct ON lgbrand.brand_id = lgproduct.brand_id
+GROUP BY lgbrand.brand_id
+ORDER BY lgbrand.brand_id DESC;
+
+/*
+	Question 9
+	Write a query to display a brand name and the number of products of that brand that are in the database. 
+	Sort the output by the brand name. 
+*/
+
+SELECT brand_name, COUNT(brand_name) 'NUMPRODUCTS' FROM lgbrand
+	JOIN lgproduct ON lgbrand.brand_id = lgproduct.brand_id
+GROUP BY brand_name
+ORDER BY brand_name;
+
+/*
+	Question 10
+	Write a query to display the current salary for each employee in department 300. We only want the current employees. 
+	These employees have a NULL end date in the salary history table. 
+	We want the employee number, employee last name, first name and salary amount. 
+	Sort the output in descending order by salary amount. 
+*/
+
+SELECT lgemployee.emp_num, emp_lname, emp_fname, sal_amount FROM lgemployee
+	JOIN lgsalary_history ON lgemployee.emp_num = lgsalary_history.emp_num
+WHERE dept_num = 300 AND sal_end IS NULL
+ORDER BY sal_amount DESC;
+
+/*
+	Question 11
+	Write a query display the department number, department name, department phone number, employee number, and last name of 
+	each department manager. Sort the output by department name. 
+*/
+
+SELECT lgdepartment.dept_num, dept_name, dept_phone, lgemployee.emp_num, emp_lname FROM lgdepartment
+	JOIN lgemployee ON lgemployee.dept_num = lgdepartment.dept_num
+WHERE emp_title LIKE '%MANAGER'
+ORDER BY dept_name;
+
+/*
+	Question 12
+	Write a query to display the customer code, first name, last name, and sum of all invoice totals for customers with 
+	cumulative invoice totals greater than $1,500. Sort the output by the sum of invoice totals in descending order. 
+*/
+
+SELECT lginvoice.cust_code, cust_fname, cust_lname, SUM(inv_total) AS 'Sum of Invoice Totals' FROM lginvoice
+	JOIN lgcustomer ON lgcustomer.cust_code = lginvoice.cust_code
+GROUP BY lginvoice.cust_code, cust_fname, cust_lname
+HAVING SUM(inv_total) > 1500
+ORDER BY SUM(inv_total) DESC;
+
+/*
+	Question 13
+	Write a query display the department number, department name, department phone number, employee number, and last name of 
+	each department manager. Sort the output by department name. 
+*/
+
+SELECT lgdepartment.dept_num, dept_name, dept_phone, lgemployee.emp_num, emp_lname FROM lgdepartment
+	JOIN lgemployee ON lgemployee.dept_num = lgdepartment.dept_num
+WHERE emp_title LIKE '%MANAGER'
+ORDER BY dept_name;
+
+/*
+	Question 14
+	Write a query to display the employee number, last name, email address, title and department name of each employee whose 
+	title ends in the word “Associate” Sort the output by department name and employee title.
+*/
+
+SELECT lgemployee.emp_num, emp_lname, emp_email, emp_title, dept_name FROM lgdepartment
+	JOIN lgemployee ON lgemployee.dept_num = lgdepartment.dept_num
+WHERE emp_title LIKE '%Associate'
+ORDER BY dept_name, emp_title;
+
+/* 
+	Question 15
+	Write a query to display the department number and the most recent employee hire date for each department.” 
+	Sort the output by department number.
+*/
+
+SELECT dept_num, MAX(emp_hiredate) AS 'MOSTRECENT' FROM lgemployee
+GROUP BY dept_num
+ORDER BY dept_num;
+
+

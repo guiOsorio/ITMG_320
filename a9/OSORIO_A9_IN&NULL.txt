@@ -1,0 +1,37 @@
+/* Done by Guilherme Osorio */
+
+/* In Null Query 1 - teams with no project */
+
+SELECT * FROM AdventureWorks2008.dbo.teams
+WHERE project IS NULL;
+
+/* In Null Query 2 - count of persons with last name Anand, Camacho or Kahn */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person
+WHERE LastName IN ('Anand', 'Camacho', 'Kahn');
+
+/* In Null Query 3 - list the persons with last name Anand, Camacho or Kahn */
+
+SELECT BusinessEntityID, FirstName, LastName FROM AdventureWorks2008.Person.Person
+WHERE LastName IN ('Anand', 'Camacho', 'Kahn'); 
+
+/* In Null Query 4 - count the persons with last name not Anand, Camacho or Kahn */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person
+WHERE LastName NOT IN ('Anand', 'Camacho', 'Kahn'); 
+
+/* In Null Query 5 - count all the persons in the database */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person;
+
+/* In Null Query 6 - count all the persons without a middle name */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person
+WHERE MiddleName IS NULL;
+
+/* In Null Query 7 - count all the persons with a middle name */
+
+SELECT COUNT(*) FROM AdventureWorks2008.Person.Person
+WHERE MiddleName IS NOT NULL;
+
+
